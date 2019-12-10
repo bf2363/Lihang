@@ -13,9 +13,7 @@ Created on Sun Dec  8 13:31:59 2019
 import logging
 from sklearn import datasets
 from matplotlib import pyplot as plt
-
-
-
+import numpy as np
 
 class perceptron(object):
     def __init__(self, eta=1, max_iter=1000, random_state=None, verbose=False):
@@ -56,13 +54,13 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
     
 
-from sklearn.linear_model import Perceptron
-
 iris = datasets.load_iris()
 X = iris.data[:, :2]
-y = iris.target
+Y = iris.target
 
-
+X = X[Y < 2]
+Y = Y[Y < 2]
+Y = 2*Y -  1
 xxx = perceptron(random_state=3,max_iter=200000,verbose=False, eta=0.01)
 xxx.fit(X,Y)
 
@@ -73,4 +71,10 @@ x_vals = np.sort(np.unique(X[:,0]))
 y_vals = -xxx.intercept/ xxx.coef[1] - xxx.coef[0] / xxx.coef[1]  * x_vals
 plt.plot(x_vals, y_vals, '--') 
 plt.show()
+
+
+#========== 
+from sklearn.linear_model import Perceptron
+
+
 
