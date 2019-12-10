@@ -75,6 +75,11 @@ plt.show()
 
 #========== 
 from sklearn.linear_model import Perceptron
-
-
-
+clf = Perceptron(tol=0., random_state=1,max_iter=50000,eta0=0.01)
+clf.fit(X, Y)
+plt.figure(figsize=(5, 4))
+plt.scatter(X[:,0], X[:,1], c=Y)
+x_vals = np.sort(np.unique(X[:,0]))
+y_vals = -clf.intercept_/ clf.coef_[0][1] - clf.coef_[0][0] / clf.coef_[0][1]  * x_vals
+plt.plot(x_vals, y_vals, '--') 
+plt.show()
