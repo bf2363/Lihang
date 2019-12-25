@@ -125,5 +125,38 @@ class KDNode(Node):
         self.sel_axis= self_axis
         self.dimentions = dimensions
     
+    @require_axis
+    def add(self, point):
+        
+        current = self
+        while True:
+            if current.data is None:
+                current.data = point
+                return current
+        
+            if point[current.axis] < current.data[current.axis]:
+                if current.left is None:
+                    current.left = current.create_subnode(point)
+                    return current.left
+                else:
+                    current = current.left
+            
+            else:
+                if current.right is None:
+                    current.right = current.create_subnode(point)
+                    return current.right
+                else:
+                    current = current.right
+    
+    @require_axis
+    def create_subnode(self, data):
+        return self.__class__(data,
+                            axis=self.sel_axis(self.axis),
+                            sel_axis=self.sel_axis,
+                            dimensions=self.dimentions)
+
+
+    @require_axis
+    
     
 
